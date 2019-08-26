@@ -8,7 +8,7 @@ import PageNotFound from './components/PageNotFound';
 import CoursesPage from './components/courses/CoursesPage';
 
 const App = () => (
-  <div className='container-fluid'>
+  <div className='container container-fluid'>
     <Header/>
     <Switch>
       <Route exact path='/' component={HomePage}></Route>
