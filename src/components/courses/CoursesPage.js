@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as courseActions from '../../redux/actions/courseActions';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from '../../../../../../Users/diego.garcia-viana/AppData/Local/Microsoft/TypeScript/3.5/node_modules/redux';
 
 class CoursesPage extends React.Component {
-
     state = {
         course: {
             title: ''
@@ -20,7 +20,7 @@ class CoursesPage extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.dispatch(courseActions.createCourse(this.state.course));
+        this.props.actions.createCourse(this.state.course);
     }
 
     render() {
@@ -30,14 +30,17 @@ class CoursesPage extends React.Component {
                 <h3>Add Course</h3>
                 <input type='text' onChange={this.handleChange} value={this.state.course.title}/>
                 <input type='submit' value='Save' className='btn btn-primary btn-xs'/>
+                {this.props.courses.map(course => (
+                    <div key={course.title}>{course.title}</div>
+                ))}
             </form>
         );
     }
-
 }
 
 CoursesPage.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    courses: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -46,6 +49,12 @@ function mapStateToProps(state) {
     };
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(courseActions, dispatch)
+    };
+}
+
 // Connect returns a function. That function then calls our component
 // Connect automatically passes dispatch in if we omit mapDispatchToProps here
-export default connect(mapStateToProps) (CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);

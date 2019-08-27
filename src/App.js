@@ -11,10 +11,10 @@ const App = () => (
   <div className='container container-fluid'>
     <Header/>
     <Switch>
-      <Route exact path='/' component={HomePage}></Route>
-      <Route path='/about' component={AboutPage}></Route>
-      <Route path='/courses' component={CoursesPage}></Route>
-      <Route component={PageNotFound}></Route>
+      <Route exact path='/' component={HomePage}/>
+      <Route path='/about' component={AboutPage}/>
+      <Route path='/courses' component={CoursesPage}/>
+      <Route component={PageNotFound}/>
     </Switch>
   </div>
 );
