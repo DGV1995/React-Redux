@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as courseActions from '../../redux/actions/courseActions';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from '../../../../../../Users/diego.garcia-viana/AppData/Local/Microsoft/TypeScript/3.5/node_modules/redux';
+//import { bindActionCreators } from 'redux';
 
 class CoursesPage extends React.Component {
     state = {
@@ -20,7 +20,9 @@ class CoursesPage extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.actions.createCourse(this.state.course);
+        //debugger;
+        this.props.actions.createCourse(this.state.course); // actions is defined in mapDispatchToProps
+        //this.props.createCourse(this.state.course);
     }
 
     render() {
@@ -41,19 +43,20 @@ class CoursesPage extends React.Component {
 CoursesPage.propTypes = {
     courses: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
+    // createCourse: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
+    //debugger;
     return {
         courses: state.courses
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(courseActions, dispatch)
-    };
-}
+// When declared as an object, each property is automatically bound to dispatch
+const mapDispatchToProps = {
+    createCourse: courseActions.createCourse
+};
 
 // Connect returns a function. That function then calls our component
 // Connect automatically passes dispatch in if we omit mapDispatchToProps here
