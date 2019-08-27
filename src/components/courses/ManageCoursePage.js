@@ -23,7 +23,7 @@ const ManageCoursePage = ({ courses, authors, loadAuthors, loadCourses, saveCour
                 alert('Loading authors failed!' + error);
             });
         }
-    }, [props.course]); // The empty array as a second argument to effect means the effect will run once when the component mounts
+    }, [props.course]); 
 
     function handleChange(event) {
         const {name, value} = event.target;
