@@ -15,7 +15,11 @@ const CourseList = ({courses}) => ( // courses = props (inline definition)
         <tbody>
             {courses.map(course => (
                 <tr key={course.id}>
-                    <td><a className='btn btn-primary btn-xs' href={'http://pluralsight.com/courses/' + course.slug}>Watch</a></td>
+                    <td>
+                        <a className='btn btn-primary btn-xs' href={'http://pluralsight.com/courses/' + course.slug}>
+                            Watch
+                        </a>
+                    </td>
                     <Link to={'/course/' + course.slug}>{course.title}</Link>
                     <td>{course.authorName}</td>
                     <td>{course.category}</td>

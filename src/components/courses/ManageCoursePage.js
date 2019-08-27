@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import CourseForm from './CourseForm';
 import { newCourse } from '../../tools/mockData';
 
-const ManageCoursePage = ({ courses, authors, loadAuthors, loadCourses, saveCourse, ...props }) => { // Assign any props I haven't destructured on the left to a variable called props
+const ManageCoursePage = ({ courses, authors, loadAuthors, loadCourses, saveCourse, history, ...props }) => { // Assign any props I haven't destructured on the left to a variable called props
     const [course, setCourse] = useState({...props.course});
     const [errors, setErrors] = useState({});
 
@@ -15,25 +15,29 @@ const ManageCoursePage = ({ courses, authors, loadAuthors, loadCourses, saveCour
             loadCourses().catch(error => { 
                 alert('Loading courses failed!' + error);
             });
+        } else {
+            setCourse({...props.course});
         }
         if (authors.length === 0) {
             loadAuthors().catch(error => {
                 alert('Loading authors failed!' + error);
             });
         }
-    }, []); // The empty array as a second argument to effect means the effect will run once when the component mounts
+    }, [props.course]); // The empty array as a second argument to effect means the effect will run once when the component mounts
 
     function handleChange(event) {
         const {name, value} = event.target;
         setCourse(prevCourse => ({
             ...prevCourse,
             [name]: name === 'authorId' ? parseInt(value, 10) : value
-        }))
+        }));
     }
 
     function handleSave(event) {
         event.preventDefault();
-        saveCourse(course);
+        saveCourse(course).then(() => {
+            history.push('/courses');
+        });
     }
 
     return(
@@ -53,13 +57,19 @@ ManageCoursePage.propTypes = {
     authors: PropTypes.array.isRequired,
     loadCourses: PropTypes.func.isRequired,
     saveCourse: PropTypes.func.isRequired,
-    loadAuthors: PropTypes.func.isRequired
+    loadAuthors: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-    //debugger;
+function getCourseBySlug(courses, slug) {
+    return courses.find(course => course.slug === slug) || null;
+}
+
+function mapStateToProps(state, ownProps) { // ownProps lets us access the component's props. We ca use this to read the URL data injected on props by React Router
+    const slug = ownProps.match.params.slug; // this param in in App.js --> <Route/>
+    const course = slug && state.courses.length > 0 ? getCourseBySlug(state.courses, slug) : newCourse;
     return {
-        course: newCourse,
+        course,
         courses: state.courses,
         authors: state.authors
     };
