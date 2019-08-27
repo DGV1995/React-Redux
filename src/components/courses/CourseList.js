@@ -6,8 +6,8 @@ const CourseList = ({courses}) => ( // courses = props (inline definition)
     <table className='table table-bordered table-striped'>
         <thead className='thead-inverse'>
             <tr>
+                <th></th>
                 <th>Title</th>
-                <th>Slug</th>
                 <th>Author</th>
                 <th>Category</th>
             </tr>
