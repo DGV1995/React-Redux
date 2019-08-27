@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as courseActions from '../../redux/actions/courseActions';
-import * as authorActions from '../../redux/actions/authorActions';
+//import * as courseActions from '../../redux/actions/courseActions';
+//import * as authorActions from '../../redux/actions/authorActions';
+import { loadCourses } from '../../redux/actions/courseActions';
+import { loadAuthors } from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import CourseList from './CourseList';
@@ -12,6 +14,10 @@ class CoursesPage extends React.Component {
         redirectToAddCoursePage: false
     };
 
+    /*
+        If you need to interact with the navigator, made your work in componentDidMount() or in the other lifecycle methods.
+        Keeping render() pure makes the components easier to consider
+    */
     componentDidMount() {
         const { courses, authors, actions } = this.props;
         if (courses.length === 0) {
@@ -44,15 +50,14 @@ class CoursesPage extends React.Component {
     }
 }
 
+// PropTypes is used to verify the properties types of a component
 CoursesPage.propTypes = {
     courses: PropTypes.array.isRequired,
     authors: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
-    // createCourse: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-    //debugger;
     return {
         courses: state.authors.length === 0 ? [] : state.courses.map(course => {
             return {
@@ -65,13 +70,18 @@ function mapStateToProps(state) {
 }
 
 // When declared as an object, each property is automatically bound to dispatch
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = {
+    actions: {
+        loadCourses,
+        loadAuthors
+    }
+    /*
     return {
-        actions: {
+        /*actions: {
             loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
             loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch)
         }
-    };
+    };*/
 };
 
 // Connect returns a function. That function then calls our component
