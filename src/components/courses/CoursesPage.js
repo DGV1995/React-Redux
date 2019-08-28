@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import * as courseActions from '../../redux/actions/courseActions';
-//import * as authorActions from '../../redux/actions/authorActions';
-import { loadCourses } from '../../redux/actions/courseActions';
-import { loadAuthors } from '../../redux/actions/authorActions';
+import * as courseActions from '../../redux/actions/courseActions';
+import * as authorActions from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import CourseList from './CourseList';
@@ -15,8 +13,8 @@ class CoursesPage extends React.Component {
     };
 
     /*
-        If you need to interact with the navigator, made your work in componentDidMount() or in the other lifecycle methods.
-        Keeping render() pure makes the components easier to consider
+    If you need to interact with the navigator, made your work in componentDidMount() or in the other lifecycle methods.
+    Keeping render() pure makes the components easier to consider.
     */
     componentDidMount() {
         const { courses, authors, actions } = this.props;
@@ -32,7 +30,7 @@ class CoursesPage extends React.Component {
         }
     }
     render() {
-        // If the left side of the statement is true, the right one will be executed
+        // If the left side of the statement is true, the right one will be executed (first line)
         return(
             <>  
                 {this.state.redirectToAddCoursePage && <Redirect to='/course/'/>}
@@ -69,19 +67,13 @@ function mapStateToProps(state) {
     };
 }
 
-// When declared as an object, each property is automatically bound to dispatch
-const mapDispatchToProps = {
-    actions: {
-        loadCourses,
-        loadAuthors
-    }
-    /*
+function mapDispatchToProps(dispatch) {    
     return {
-        /*actions: {
+        actions: {
             loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
             loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch)
         }
-    };*/
+    };
 };
 
 // Connect returns a function. That function then calls our component
