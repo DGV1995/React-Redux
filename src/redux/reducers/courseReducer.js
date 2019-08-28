@@ -2,6 +2,13 @@ import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
 // With 'default' term, you can decide the alias in the future imports
+
+/*
+A reducer is a function that receives two parameters: an initial state and an action.
+Depending on the action type, it will execute one operation or another and return
+a new state.
+*/
+
 export default function courseReducer(state = initialState.courses, action) {
     switch(action.type) {
         case types.CREATE_COURSE_SUCCESS:

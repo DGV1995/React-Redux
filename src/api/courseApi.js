@@ -1,6 +1,8 @@
 import { handleResponse, handleError } from "./apiUtils";
 import { url } from './environment/apiUrl';
 
+// COURSE API IS THE INTERACTION WITH THE REPOSITORY
+
 const baseUrl = url + '/courses/';
 
 export function getCourses() {

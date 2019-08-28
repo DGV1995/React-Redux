@@ -1,5 +1,8 @@
 import * as types from './actionTypes';
 import * as courseApi from '../../api/courseApi';
+import { beginApiCall } from './apiStatusActions';
+
+// COURSE ACTIONS IS THE SERVICE
 
 export function loadCourseSuccess(courses) {
     return {type: types.LOAD_COURSES_SUCCESS, courses}; 
@@ -15,6 +18,7 @@ export function updateCourseSuccess(course) {
 
 export function loadCourses() {
     return function (dispatch) {
+        dispatch(beginApiCall());
         return courseApi.getCourses().then(courses => {
             dispatch(loadCourseSuccess(courses));
         }).catch(error => {
@@ -25,6 +29,7 @@ export function loadCourses() {
 
 export function saveCourse(course) {
     return function(dispatch, getState) { // getState lets us access the Redux store data
+        dispatch(beginApiCall());
         return courseApi.saveCourse(course).then(savedCourse => {
             course.id ? dispatch(updateCourseSuccess(savedCourse)) : dispatch(createCourseSuccess(savedCourse));
         }).catch(error => {
